@@ -1,0 +1,23 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+
+  <ul>
+  	{% for title in titles %}
+  	  <li>
+  	  	<p>{{ title }} </p>
+	    <p>{{ title.text }}</p>
+  	    <p>{{ title.owner}} / {{ title.date_added|date:'M d, Y H:i' }}</p>
+
+		{% if user == title.owner %}
+		  <a href="{% url 'blogs:edit_post' title.id %}">Edit post</a>
+		{% endif %}
+		</p>
+  	  </li>
+  	{% empty %}
+  	  <li>No posts have bee added yet.</li>
+  	{% endfor %}
+  </ul>
+  <a href="{% url 'blogs:new_post' %}">Add a new post:</a>
+
+{% endblock content %}
