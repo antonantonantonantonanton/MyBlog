@@ -1,5 +1,21 @@
-{% exteds "blogs/base.html" %}
+{% extends "blogs/base.html" %}
+
+{% block page_header %}
+  <div class='jumbotron'>
+    <h1>MyBlog</h1>
+  <p class="lead">Сreate your own blog and write down your thoughts and observations.</p>
+{% endblock page_header %}
 
 {% block content %}
-  <p>Blogs it's cool!</p>
+    {% if user.is_authenticated != True %}
+      <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+          role="button">Sign in &raquo;</a>
+      <p class="lead">or</p>
+      <a class="btn btn-lg btn-primary" href="{% url 'users:login' %}"
+          role="button">Log in &raquo;</a>    
+      {% else %}
+      <h5><a href="{% url 'blogs:posts' %}">Go to MyPosts</a></h5>
+    
+    {% endif %}
+  </div>
 {% endblock content %}

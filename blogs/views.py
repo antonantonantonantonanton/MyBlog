@@ -7,7 +7,7 @@ from .forms import TitleForm
 
 def index(request):
     """Homepage blogs"""
-    return render(request, 'blogs/base.html')
+    return render(request, 'blogs/index.html')
 
 
 def check_blog_owner(request, title):
@@ -15,10 +15,10 @@ def check_blog_owner(request, title):
     if title.owner != request.user:
         raise Http404
 
-
+@login_required
 def posts(request):
     """It displays list of posts."""
-    titles = BlogPost.objects.order_by('-id')
+    titles = BlogPost.objects.filter(owner=request.user).order_by('-date_added')
     context = {'titles': titles}
     return render(request, 'blogs/posts.html', context)
 

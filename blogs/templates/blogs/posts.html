@@ -1,13 +1,24 @@
 {% extends "blogs/base.html" %}
 
-{% block content %}
+{% block page_header %}
+	<h1>MyPosts</h1>
+{% endblock page_header %}
 
+
+{% block content %}
+<h5><a href="{% url 'blogs:new_post' %}" class="form">Add a new post</a></h5>
+  <div class='jumbotron'>
   <ul>
   	{% for title in titles %}
-  	  <li>
+  		<h3>
   	  	<p>{{ title }} </p>
+  	  </h3>
+  	  
+  	  <h6 class="card-header">
 	    <p>{{ title.text }}</p>
-  	    <p>{{ title.owner}} / {{ title.date_added|date:'M d, Y H:i' }}</p>
+	    </h6>
+	  	
+  	    <small><p>{{ title.date_added|date:'M d, Y H:i' }}</p></small>
 
 		{% if user == title.owner %}
 		  <a href="{% url 'blogs:edit_post' title.id %}">Edit post</a>
@@ -15,9 +26,9 @@
 		</p>
   	  </li>
   	{% empty %}
-  	  <li>No posts have bee added yet.</li>
+  	  <p class="lead">No posts have been added yet.</p>
   	{% endfor %}
   </ul>
-  <a href="{% url 'blogs:new_post' %}">Add a new post:</a>
+</div>
 
 {% endblock content %}
